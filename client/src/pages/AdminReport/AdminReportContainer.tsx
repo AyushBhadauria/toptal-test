@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import DietService from './../../service/dietService'
 import Title from 'src/component/Title';
 import AppTable from 'src/component/AppTable';
@@ -19,6 +19,7 @@ export const AdminReportContainer = () => {
            {report ?
             <>
                 <AppTable name='AdminReport' columns={entriesReportColumns} rows={getEntriesReportRows(report!)} />
+                <Box sx={{mt: 5}}><Title variant={'h6'}>Average cal added (last 7 days)</Title></Box>
                 <AppTable name='CaloriesReport' columns={averageCaloriesReportColumns} rows={report.userLastSevenDaysSumCal} />
             </>
            : null}

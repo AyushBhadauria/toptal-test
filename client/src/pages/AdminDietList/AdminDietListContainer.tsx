@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Container, Box } from '@mui/material';
+import { Container, Box, Tooltip } from '@mui/material';
 import Loader from 'src/component/Loader';
 import { useAppSelector, useAppDispatch } from 'src/hooks/hooks';
 import CreateDiet from 'src/component/CreateDiet';
 import DietService from 'src/service/dietService';
 import Title from 'src/component/Title';
 import { fetchAdminDietList, selectAdminDiet } from 'src/store/adminDiet/adminDietSlice';
-import AppTable from 'src/component/AppTable';
+import AdminDietTable from './AllDietsTable';
 import {  Add, Create, Delete } from '@mui/icons-material';
-import { adminDietListColumns } from './AdminDietList.business';
 
 export const AdminDietListContainer = () => {
     // state
@@ -72,20 +71,6 @@ export const AdminDietListContainer = () => {
         onModalToggle();
     }
 
-    const actionColumn = { 
-        accessor: 'id',
-        header: '',
-        format: (value: any) => (
-            <>
-                <Create sx={{ cursor: 'pointer'}} onClick={() => onSetUpdateItem(value)} />
-                <Add sx={{ml: 2, cursor: 'pointer'}} onClick={() => onSetCreateItem(value)} />
-                <Delete sx={{ml: 2, cursor: 'pointer'}} onClick={() => onDeleteItem(value.id)} />
-            </>
-        ),
-    }
-
-    adminDietListColumns.push(actionColumn)
-
     return (
         <Container sx={{ py: 2 }} maxWidth={false}>
             <Box display={'flex'} sx={{mb: 5}}>
@@ -93,10 +78,11 @@ export const AdminDietListContainer = () => {
             </Box>
             {isLoading ? 
               <Loader /> :
-              <AppTable 
-                name='AdminDietList'
-                columns={adminDietListColumns}
-                rows={dietList}
+              <AdminDietTable 
+               dietList={dietList}
+               onCreate={onSetCreateItem}
+               onUpdate={onSetUpdateItem}
+               onDelete={onDeleteItem}
               />
             }
             <CreateDiet 
