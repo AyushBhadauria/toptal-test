@@ -1,0 +1,1 @@
+export { CalorieText as default } from './CalorieText'

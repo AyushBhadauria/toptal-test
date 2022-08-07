@@ -1,0 +1,1 @@
+export { CreateDiet as default } from './CreateDiet'

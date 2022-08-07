@@ -1,0 +1,1 @@
+export { AdminDietListContainer as default } from './AdminDietListContainer'

@@ -1,0 +1,1 @@
+export { DietReportContainer as default } from './DietReportContainer'
