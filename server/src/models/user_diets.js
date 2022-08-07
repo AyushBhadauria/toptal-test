@@ -39,5 +39,9 @@ module.exports = (db) => {
     foreignKey: 'user_id',
     as: 'user',
   });
+  Users.hasMany(UserDiets, {
+    foreignKey: 'id',
+    as: 'diets',
+  });
   return UserDiets;
 }

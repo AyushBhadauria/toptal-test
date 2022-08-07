@@ -39,9 +39,21 @@ const mapAdminDietList = (list) => {
   }))
 }
 
+const mapDietReportResponse = ({ lastSevenDaysSumCalResponse, ...rest }) => {
+  return {
+     ...rest,
+     userLastSevenDaysSumCal: lastSevenDaysSumCalResponse.map(user => ({
+      id: user.id,
+      name: user.name,
+      totalCalories: user.diets[0].dataValues.totalCalories
+     }))
+  }
+}
+
 module.exports = {
     buildDietBody,
     mapDietList,
     mapAdminDietList,
-    buildUpdateDietBody
+    buildUpdateDietBody,
+    mapDietReportResponse
 }

@@ -19,7 +19,7 @@ export const AdminReportContainer = () => {
            {report ?
             <>
                 <AppTable name='AdminReport' columns={entriesReportColumns} rows={getEntriesReportRows(report!)} />
-                <AppTable name='CaloriesReport' columns={averageCaloriesReportColumns} rows={report.lastSevenDaysSumCalResponse} />
+                <AppTable name='CaloriesReport' columns={averageCaloriesReportColumns} rows={report.userLastSevenDaysSumCal} />
             </>
            : null}
         </Container>

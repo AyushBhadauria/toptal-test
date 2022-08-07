@@ -17,15 +17,14 @@ export const entriesReportColumns: ITableColumn[] = [
 ]
 export const averageCaloriesReportColumns: ITableColumn[] = [
     { 
-        accessor: 'user',
+        accessor: 'name',
         header: 'User Name',
-        format: (user: any) => (user.name),
     },
 
     { 
         accessor: 'totalCalories',
         header: 'Average Calories',
-        format: (value: any) => ((parseFloat(value) / 7).toFixed(2)),
+        format: (value: any) => ((parseFloat(value) / 7).toFixed(5)),
     },
 
 ]

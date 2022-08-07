@@ -4,7 +4,8 @@ const {
   mapDietList,
   mapAdminDietList,
   buildDietBody,
-  buildUpdateDietBody
+  buildUpdateDietBody,
+  mapDietReportResponse
 } = require('./../mappers/dietResponse');
 const { dateRangeForWeek, dateRangeForDate, dateRangeForLastSevenDays } = require('./diet.business')
 
@@ -58,8 +59,8 @@ const getDietList = async (request, response) => {
          $between: [
           moment(startDate).startOf('day').format(),
           moment(endDate).endOf('day').format(),
-         ]
-       }
+        ]
+      }
     }
    
     const list = await db.user_diets.findAll({ where, order: [['consumed_at', 'desc']] }); 
@@ -94,15 +95,15 @@ const getUserDietReports = async(request, response) => {
    const lastWeekCountPromise = db.user_diets.count({ where: { createdAt: {  $between: lastWeekOneRange }}});
    const secondLastWeekCountPromise = db.user_diets.count({ where: { createdAt: {  $between: lastWeekTwoRange }}});
    const todayCountPromise = db.user_diets.count({ where: { createdAt: {  $between: todayRange }}});
-   const lastSevenDaysSumCalPromise = db.user_diets.findAll({ 
-    attributes: [[db.sequelize.fn('sum', db.sequelize.col('calories')), 'totalCalories']],
-    where: { createdAt: {  $between: lastSevenDaysRange }},
-    group: ['user.id'],
+   const lastSevenDaysSumCalPromise = db.users.findAll({ 
+    attributes: ['id', 'name'],
     include: [{
-      model: db.users,
-      as: 'user',
-      attributes: ['id', 'name']
-    }]
+      attributes: [[db.sequelize.fn('sum', db.sequelize.col('calories')), 'totalCalories']],
+      model: db.user_diets,
+      as: 'diets',
+      where: { createdAt: {  $between: lastSevenDaysRange }},
+    }],
+    group: ['users.id', 'diets.id'],
   });
 
    const [lastWeekEntriesCount, secondLastWeekEntriesCount, todayEntriesCount, lastSevenDaysSumCalResponse] = await Promise.all([
@@ -112,7 +113,12 @@ const getUserDietReports = async(request, response) => {
     lastSevenDaysSumCalPromise
   ]);
 
-   response.json({ lastWeekEntriesCount, secondLastWeekEntriesCount, todayEntriesCount, lastSevenDaysSumCalResponse })
+   response.json(mapDietReportResponse({
+    lastWeekEntriesCount,
+    secondLastWeekEntriesCount,
+    todayEntriesCount,
+    lastSevenDaysSumCalResponse
+  }));
 
   } catch(error) {
     response.status(500).json({message: error.message})

@@ -73,12 +73,13 @@ declare interface IAdminReportCount {
   lastWeekEntriesCount: number;
   secondLastWeekEntriesCount: number;
   todayEntriesCount: number;
-  lastSevenDaysSumCalResponse: ILastSevenDaysSumCal[]
+  userLastSevenDaysSumCal: ILastSevenDaysSumCal[]
 }
 
 declare interface ILastSevenDaysSumCal {
-  totalCalories: string;
-  user: IUser
+  id: number;
+  name: string;
+  totalCalories: number;
 }
 
 declare interface ITableColumn {
