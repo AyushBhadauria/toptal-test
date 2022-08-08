@@ -11,7 +11,7 @@ import {
     TableFooter,
     TablePagination
 } from '@mui/material';
-import {  Add, Create, Delete, Error } from '@mui/icons-material';
+import {  Add, Cancel, Create, Delete, Error } from '@mui/icons-material';
 import moment from 'moment';
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 
@@ -34,7 +34,7 @@ const AdminDietTable = ({ dietList, onUpdate, onCreate, onDelete, currentPage, o
                         <TableCell>Calories</TableCell>
                         <TableCell>User Name</TableCell>
                         <TableCell>Consumed At</TableCell>
-                        <TableCell >Good Diet </TableCell>
+                        <TableCell >is Cheat Diet? </TableCell>
                         <TableCell ></TableCell>
 
                     </TableRow>
@@ -47,10 +47,10 @@ const AdminDietTable = ({ dietList, onUpdate, onCreate, onDelete, currentPage, o
                     <TableCell>{dietItem.user.name}</TableCell>
                     <TableCell>{moment(new Date(dietItem.consumedAt)).format('MMMM Do YYYY, h:mm:ss a')}</TableCell>
                     <TableCell> 
-                        <Checkbox
-                          checkedIcon={dietItem.isCheatDiet ? <Error/> : undefined} 
-                          checked={true}
-                          color={dietItem.isCheatDiet ? 'error' : 'success'}
+                         <Checkbox
+                            checkedIcon={dietItem.isCheatDiet ? <Error/> : <Cancel />} 
+                            checked={true}
+                            color={dietItem.isCheatDiet ? 'error' : 'success'}
                         />
                     </TableCell>
                     <TableCell>
@@ -67,7 +67,7 @@ const AdminDietTable = ({ dietList, onUpdate, onCreate, onDelete, currentPage, o
                         rowsPerPageOptions={[]}
                         colSpan={6}
                         count={dietList.count}
-                        rowsPerPage={10}
+                        rowsPerPage={20}
                         page={currentPage}
                         onPageChange={onPageChange}
                         ActionsComponent={TablePaginationActions}

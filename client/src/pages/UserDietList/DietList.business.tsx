@@ -18,6 +18,11 @@ export const dietListColumns: ITableColumn[] = [
         format: (value: any) => (moment(new Date(value)).format('MMMM Do YYYY, h:mm:ss a')),
     },
     { 
+        accessor: 'createdAt',
+        header: 'Created At',
+        format: (value: any) => (moment(new Date(value)).format('MMMM Do YYYY, h:mm:ss a')),
+    },
+    { 
         accessor: 'isCheatDiet',
         header: 'is Cheat Diet?',
         format: (value: any) => (
