@@ -5,8 +5,8 @@ const cors = require('cors');
 const { dbInit } =require('./src/models');
 const routes = require('./src/routes/routes');
 const app = express();
-const testUsers = require('./src/testData/users.json')
-const testUsersDiets = require('./src/testData/user_diets.json')
+// const testUsers = require('./src/testData/users.json')
+// const testUsersDiets = require('./src/testData/user_diets.json')
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -17,7 +17,7 @@ let server;
 
 db.sequelize.sync().then(() => {
     server = app.listen(process.env.APP_PORT, '0.0.0.0', () => {
-      console.log('server started on port 3010');
+      console.log(`Server started on port ${process.env.APP_PORT}`);
       // db.users.bulkCreate(testUsers).then(a => console.log(a.length));
       // db.user_diets.bulkCreate(testUsersDiets).then(a => console.log(a.length));
 

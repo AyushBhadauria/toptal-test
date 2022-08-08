@@ -59,8 +59,8 @@ const DietListFilter = ({ onSubmit }: Props) => {
 
         <FormGroup sx={{ p: 2 }}>
         <TextField
-            id="consumedAt"
-            label="Comsumed At Start Date"
+            id="createdAt"
+            label="Created At Start Date"
             type="date"
             margin='normal'
             InputLabelProps={{ shrink: true }}
@@ -69,8 +69,8 @@ const DietListFilter = ({ onSubmit }: Props) => {
             sx={{ width: 200 }}
         />
         <TextField
-            id="consumedAt"
-            label="Comsumed At End Date"
+            id="createdAt"
+            label="Created At End Date"
             type="date"
             margin='normal'
             InputLabelProps={{ shrink: true }}

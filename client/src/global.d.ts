@@ -85,6 +85,7 @@ declare interface ILastSevenDaysSumCal {
   id: number;
   name: string;
   totalCalories: number;
+  averageCalories: number;
 }
 
 declare interface ITableColumn {

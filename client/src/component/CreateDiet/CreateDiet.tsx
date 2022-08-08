@@ -88,6 +88,7 @@ export const CreateDiet = (props: Props) => {
                         label="Comsumed At"
                         type="datetime-local"
                         margin='normal'
+                        required
                         InputLabelProps={{ shrink: true }}
                         sx={{ width: 250 }}
                         {...field}
