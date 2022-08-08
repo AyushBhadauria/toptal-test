@@ -68,3 +68,15 @@ npm run start
 * Please make sure that the postgres database is running locally on 5432 Port
 * To import test user data, uncomment the code in server/index.js and run the server.
 
+### CLient ENV
+
+REACT_APP_API_URL= http://localhost:3010
+
+### Server ENV
+
+DB_HOST=127.0.0.1
+DB_NAME=calorie_app
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_PORT=5432
+APP_PORT=3010
