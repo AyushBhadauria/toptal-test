@@ -4,21 +4,21 @@ import type { RootState } from 'src/store';
 
 interface DietListState {
     isLoading: boolean;
-    dietList: AdminDietList[];
+    dietList: AdminDietListResponse;
     error: string | Error | null;
 }
 
 const initialState: DietListState = {
     isLoading: false,
-    dietList: [],
+    dietList: { count: 0, data: [] },
     error: null,
 };
 
-export const fetchAdminDietList = createAsyncThunk<AdminDietList[]>(
+export const fetchAdminDietList = createAsyncThunk<AdminDietListResponse, number | undefined>(
     '/all-diets',
-    async () => {
-        const response = await api.get('/all-diets');
-        return response.data as AdminDietList[];
+    async (page?: number) => {
+        const response = await api.get('/all-diets', { params: (page && {page})} );
+        return response.data as AdminDietListResponse;
     }
 );
 
@@ -33,7 +33,7 @@ export const dietSlice = createSlice({
             })
             .addCase(
                 fetchAdminDietList.fulfilled,
-                (state, action: PayloadAction<AdminDietList[]>) => {
+                (state, action: PayloadAction<AdminDietListResponse>) => {
                     state.isLoading = false;
                     state.dietList = action.payload;
                 }

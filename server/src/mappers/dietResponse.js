@@ -27,8 +27,8 @@ const mapDietList = (list) => {
   }))
 }
 
-const mapAdminDietList = (list) => {
-  return list.map(item => ({
+const mapAdminDietList = ({rows, count}) => {
+  const data = rows.map(item => ({
     id: item.id,
     name: item.name,
     calories: item.calories,
@@ -37,6 +37,11 @@ const mapAdminDietList = (list) => {
     user: item.user,
     createdAt: item.createdAt
   }))
+
+  return {
+    count,
+    data,
+  }
 }
 
 const mapDietReportResponse = ({ lastSevenDaysSumCalResponse, ...rest }) => {

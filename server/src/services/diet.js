@@ -52,7 +52,7 @@ const updateDiet = async (request, response) => {
 
 const getDietList = async (request, response) => {
   try {
-    const { startDate, endDate } = request.query;
+    
     const where = { user_id: request.user.id };
     if(startDate && endDate) {
        where.consumed_at = {
@@ -71,14 +71,19 @@ const getDietList = async (request, response) => {
 }
 
 const getAllDiets = async (request, response) => {
-  try {  
-    const list = await db.user_diets.findAll({ 
+  try {
+    const limit = 10;
+    const { page = 0 } = request.query;
+    
+    const list = await db.user_diets.findAndCountAll({ 
       order: [['id', 'desc']],
       include: [{
         model: db.users,
         as: 'user',
         attributes: ['id', 'name']
-      }]
+      }],
+      limit,
+      offset: page * limit
     }); 
     response.json(mapAdminDietList(list));
   } catch(error) {

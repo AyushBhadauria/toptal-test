@@ -7,19 +7,24 @@ import {
     TableRow,
     Paper,
     Checkbox,
-    Tooltip
+    Tooltip,
+    TableFooter,
+    TablePagination
 } from '@mui/material';
 import {  Add, Create, Delete, Error } from '@mui/icons-material';
 import moment from 'moment';
+import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 
 interface Props {
-  dietList: AdminDietList[];
+  dietList: AdminDietListResponse;
   onCreate: (dietItem: AdminDietList) => void;
   onUpdate: (dietItem: AdminDietList) => void;
   onDelete: (id: number) => void;
+  currentPage: number,
+  onPageChange: (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => void;
 }
 
-const AdminDietTable = ({ dietList, onUpdate, onCreate, onDelete }: Props) => {
+const AdminDietTable = ({ dietList, onUpdate, onCreate, onDelete, currentPage, onPageChange }: Props) => {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small">
@@ -35,7 +40,7 @@ const AdminDietTable = ({ dietList, onUpdate, onCreate, onDelete }: Props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                {dietList.map(dietItem => (
+                {dietList.data.map(dietItem => (
                 <TableRow key={`admin-${dietItem.name}-${dietItem.id}`}>
                     <TableCell component='th' scope='row'>{dietItem.name}</TableCell>
                     <TableCell>{dietItem.calories} kcal</TableCell>
@@ -56,6 +61,19 @@ const AdminDietTable = ({ dietList, onUpdate, onCreate, onDelete }: Props) => {
                 </TableRow>
                 ))}
                 </TableBody>
+                <TableFooter>
+                    <TableRow>
+                        <TablePagination
+                        rowsPerPageOptions={[]}
+                        colSpan={6}
+                        count={dietList.count}
+                        rowsPerPage={10}
+                        page={currentPage}
+                        onPageChange={onPageChange}
+                        ActionsComponent={TablePaginationActions}
+                        />
+                    </TableRow>
+                </TableFooter>
             </Table>
         </TableContainer>
     );

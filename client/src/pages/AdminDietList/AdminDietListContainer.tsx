@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Box, Tooltip } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import Loader from 'src/component/Loader';
 import { useAppSelector, useAppDispatch } from 'src/hooks/hooks';
 import CreateDiet from 'src/component/CreateDiet';
@@ -7,11 +7,11 @@ import DietService from 'src/service/dietService';
 import Title from 'src/component/Title';
 import { fetchAdminDietList, selectAdminDiet } from 'src/store/adminDiet/adminDietSlice';
 import AdminDietTable from './AllDietsTable';
-import {  Add, Create, Delete } from '@mui/icons-material';
 
 export const AdminDietListContainer = () => {
     // state
     const [isModalOpen, setModalState] = useState(false);
+    const [currentPage, setPage] = useState(0);
     const [isSubmitting, setSubmitting] = useState(false);
     const [createItem, setCreateItem] = useState<AdminDietList | undefined>();
     const [updateItem, setUpdateItem] = useState<AdminDietList| undefined>();
@@ -21,7 +21,7 @@ export const AdminDietListContainer = () => {
 
     const getDietList = () => {
         if (!isLoading) {
-            dispatch(fetchAdminDietList());
+            dispatch(fetchAdminDietList(currentPage));
         }
     };
 
@@ -33,7 +33,7 @@ export const AdminDietListContainer = () => {
         }
     }
 
-    useEffect(getDietList, []);
+    useEffect(getDietList, [currentPage]);
 
     const onCreateSubmit = async (body: ICalorieFormInput) => {
       setSubmitting(true)
@@ -71,6 +71,8 @@ export const AdminDietListContainer = () => {
         onModalToggle();
     }
 
+    const onPageChange = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => setPage(newPage);
+
     return (
         <Container sx={{ py: 2 }} maxWidth={false}>
             <Box display={'flex'} sx={{mb: 5}}>
@@ -83,6 +85,8 @@ export const AdminDietListContainer = () => {
                onCreate={onSetCreateItem}
                onUpdate={onSetUpdateItem}
                onDelete={onDeleteItem}
+               onPageChange={onPageChange}
+               currentPage={currentPage}
               />
             }
             <CreateDiet 

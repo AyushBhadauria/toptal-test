@@ -55,6 +55,11 @@ declare interface UserDiet {
   isCheatDiet: boolean;
 }
 
+declare interface AdminDietListResponse{
+  data: AdminDietList[]
+  count: number;
+}
+
 declare interface AdminDietList extends UserDiet{
   user: IUser
 }
