@@ -44,6 +44,7 @@ food entry.
 ## Project Info
 * The project contains client (React) and server (Node.js) with PostgresQL as database.
 * The React project is created through create-react-app boilerplate.
+* This project requires Node v14.
 * To run the client, 
 
 ```bash
