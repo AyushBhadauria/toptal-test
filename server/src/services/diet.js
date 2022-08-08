@@ -52,10 +52,10 @@ const updateDiet = async (request, response) => {
 
 const getDietList = async (request, response) => {
   try {
-    
+    const { startDate,  endDate} = request.query;
     const where = { user_id: request.user.id };
     if(startDate && endDate) {
-       where.consumed_at = {
+       where.created_at = {
          $between: [
           moment(startDate).startOf('day').format(),
           moment(endDate).endOf('day').format(),
@@ -72,7 +72,7 @@ const getDietList = async (request, response) => {
 
 const getAllDiets = async (request, response) => {
   try {
-    const limit = 10;
+    const limit = 20;
     const { page = 0 } = request.query;
     
     const list = await db.user_diets.findAndCountAll({ 
@@ -97,16 +97,17 @@ const getUserDietReports = async(request, response) => {
    const lastWeekTwoRange = dateRangeForWeek(2);
    const todayRange = dateRangeForDate();
    const lastSevenDaysRange = dateRangeForLastSevenDays();
-   const lastWeekCountPromise = db.user_diets.count({ where: { createdAt: {  $between: lastWeekOneRange }}});
-   const secondLastWeekCountPromise = db.user_diets.count({ where: { createdAt: {  $between: lastWeekTwoRange }}});
-   const todayCountPromise = db.user_diets.count({ where: { createdAt: {  $between: todayRange }}});
+   const lastWeekCountPromise = db.user_diets.count({ where: { created_at: {  $between: lastWeekOneRange }}});
+   const secondLastWeekCountPromise = db.user_diets.count({ where: { created_at: {  $between: lastWeekTwoRange }}});
+   const todayCountPromise = db.user_diets.count({ where: { created_at: {  $between: todayRange }}});
    const lastSevenDaysSumCalPromise = db.users.findAll({ 
     attributes: ['id', 'name'],
+    where: { id: { [db.sequelize.Op.ne]: 1 } },
     include: [{
-      attributes: [[db.sequelize.fn('sum', db.sequelize.col('calories')), 'totalCalories']],
-      model: db.user_diets,
-      as: 'diets',
-      where: { createdAt: {  $between: lastSevenDaysRange }},
+        model: db.user_diets,
+        as: 'diets',
+        attributes: [[db.sequelize.fn('sum', db.sequelize.col('calories')), 'totalCalories']],
+        where: { created_at: { [db.sequelize.Op.between]: lastSevenDaysRange }},
     }],
     group: ['users.id', 'diets.id'],
   });

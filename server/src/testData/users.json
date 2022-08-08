@@ -1,5 +1,12 @@
 [
   {
+    "name": "Admin Core",
+    "email": "admin",
+    "password": "admin",
+    "is_admin": true,
+    "threshold_calories": null
+  },
+  {
     "name": "John Doe",
     "email": "john",
     "password": "test"
@@ -10,10 +17,9 @@
     "password": "test"
   },
   {
-    "name": "Admin Core",
-    "email": "admin",
-    "password": "admin",
-    "is_admin": true,
-    "threshold_calories": null
+    "name": "Foo Bar",
+    "email": "foo",
+    "password": "test",
+    "threshold_calories": 5.100
   }
 ]

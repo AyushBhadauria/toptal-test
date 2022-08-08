@@ -24,6 +24,9 @@ module.exports = (db) => {
       consumed_at: {
         type: DATE
       },
+      created_at: {
+        type: DATE,
+      },
       is_cheat_diet: {
         type: BOOLEAN,
         defaultValue: false
@@ -31,6 +34,8 @@ module.exports = (db) => {
     },
     {
       tableName: 'user_diets',
+      createdAt: false,
+      updatedAt: false,
     }
   );
 
@@ -40,7 +45,7 @@ module.exports = (db) => {
     as: 'user',
   });
   Users.hasMany(UserDiets, {
-    foreignKey: 'id',
+    foreignKey: 'user_id',
     as: 'diets',
   });
   return UserDiets;

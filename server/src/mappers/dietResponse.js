@@ -4,7 +4,8 @@ const buildDietBody = (userId, { name, calories, consumedAt, isCheatDiet }) => {
     calories,
     user_id: userId,
     consumed_at: consumedAt,
-    is_cheat_diet: isCheatDiet
+    is_cheat_diet: isCheatDiet,
+    created_at: new Date(),
   }
 }
 
@@ -24,6 +25,7 @@ const mapDietList = (list) => {
     calories: item.calories,
     consumedAt: item.consumed_at,
     isCheatDiet: item.is_cheat_diet,
+    createdAt: item.created_at
   }))
 }
 
@@ -35,7 +37,7 @@ const mapAdminDietList = ({rows, count}) => {
     consumedAt: item.consumed_at,
     isCheatDiet: item.is_cheat_diet,
     user: item.user,
-    createdAt: item.createdAt
+    created_at: item.created_at
   }))
 
   return {

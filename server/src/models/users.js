@@ -38,6 +38,8 @@ module.exports = (db) => {
     },
     {
       tableName: 'users',
+      createdAt: false,
+      updatedAt: false,
     }
   );
 
